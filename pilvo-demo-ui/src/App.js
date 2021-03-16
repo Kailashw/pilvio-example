@@ -4,6 +4,7 @@ import ShowForm from './Components/ShowForm';
 import CountDownTimer from './Components/CountDownTimer';
 import CallDetails from './Components/CallDetails';
 
+const axios = require('axios');
 
 const BASE_API_URL = 'http://localhost:8080'
 
@@ -29,13 +30,20 @@ function App() {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: data,
+      body: JSON.stringify(data),
       mode: 'no-cors',
     };
+    
 
-    fetch(`${BASE_API_URL}/api/makecall`, requestOptions)
+    axios({
+      url: `${BASE_API_URL}/api/makecall`, 
+      method : 'POST',
+      headers: { 'content-type': 'application/json' },
+      mode: 'no-cors',
+      data : data
+    })
       .then(response => {
-        console.log(response.json());
+        console.log(response);
         setFormView(false);
       })
       .catch((error) => {

@@ -1,6 +1,10 @@
 var express = require('express')
+const cors = require('cors');
+
 var app = express()
 app.use(express.json())
+app.use(express.urlencoded());
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 const AUTH_ID = 'MAYTC1NWJJYJDLMTMWMJ';
 const AUTH_TOKEN = 'MTM2MDY2MDAwY2QyMmE0YjRlNzMzZjI4NTA2M2Y1';
@@ -8,23 +12,22 @@ const AUTH_TOKEN = 'MTM2MDY2MDAwY2QyMmE0YjRlNzMzZjI4NTA2M2Y1';
 app.post('/api/makecall', function (req, res) {
     var plivo = require('plivo');
     var client = new plivo.Client(AUTH_ID, AUTH_TOKEN);
-    console.log(req.body);
     try {
-        // client.calls.create(
-        //     req.body.from,                                          // from
-        //     req.body.to,                                            // to
-        //     "http://s3.amazonaws.com/static.plivo.com/answer.xml", // answer url
-        //     {
-        //         answerMethod: "GET",
-        //         time_limit: 300             // defaults to 5 minutes now
-        //     },
-        // ).then(function (response) {
-        //     console.log(response);
-        //     res.send(response)
-        // }, function (err) {
-        //     console.error(err);
-        //     res.send(err)
-        // });
+        client.calls.create(
+            req.body.from,                                          // from
+            req.body.to,                                            // to
+            "http://s3.amazonaws.com/static.plivo.com/answer.xml", // answer url
+            {
+                answerMethod: "GET",
+                time_limit: 300             // defaults to 5 minutes now
+            },
+        ).then(function (response) {
+            console.log(response);
+            res.send(response)
+        }, function (err) {
+            console.error(err);
+            res.send(err)
+        });
     } catch (error) {
         console.error('catch error', error);
         res.send(error);
