@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { MDBContainer, MDBAlert } from 'mdbreact';
 
 /**
  * This function takes time (in seconds) and disconnect function as arguments.
@@ -15,9 +16,11 @@ function CountDownTimer({ time, disconnect }) {
     }, [counter]);
 
     return (
-        <div>
-            This Call will End in : {counter} Seconds
-        </div>
+        <MDBContainer>
+            <MDBAlert color="danger" >
+                This Call will End in : {counter} Seconds
+            </MDBAlert>
+        </MDBContainer>
     )
 }
 

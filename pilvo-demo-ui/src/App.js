@@ -1,8 +1,8 @@
 import './App.css';
 import { useState } from "react";
-import ShowForm from './Components/ShowForm';
 import CountDownTimer from './Components/CountDownTimer';
 import CallDetails from './Components/CallDetails';
+import FormPage from './Components/FormPage';
 
 const axios = require('axios');
 
@@ -27,14 +27,6 @@ function App() {
   }
 
   const makeCall = async (data) => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-      mode: 'no-cors',
-    };
-    
-
     axios({
       url: `${BASE_API_URL}/api/makecall`, 
       method : 'POST',
@@ -53,17 +45,20 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="container">
+      
       {
-        formView && <ShowForm formParams={formParams} setFormParams={setFormParams} makeCall={makeCall} />
+        formView && <FormPage formParams={formParams} setFormParams={setFormParams} makeCall={makeCall} />
       }
       {
         !formView &&
         (
-          <>
-            <CountDownTimer time={formParams.time} disconnect={disconnect} />
+          <div>
+            <br/> <br/> <br/> <br/>
             <CallDetails details={formParams} />
-          </>
+            <br/> <br/>
+            <CountDownTimer time={formParams.time} disconnect={disconnect} />
+          </div>
         )
       }
     </div>
